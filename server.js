@@ -26,7 +26,8 @@ app.get("/github/callback", function(req, res){
   var code = req.query.code;
 
   githubIntegration.getAuthorizationToken(code, function(err, authorizationToken){
-    res.render("pending.ejs", {githubProfil : githubProfil, axaEmail : axaEmail, team : team, authorizationToken : authorizationToken});
+    res.json(code);
+    //res.render("pending.ejs", {githubProfil : githubProfil, axaEmail : axaEmail, team : team, authorizationToken : authorizationToken});
   });
 
 });
