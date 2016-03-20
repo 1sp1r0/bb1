@@ -10,6 +10,23 @@ exports.getAuthorizationToken = function(code, callback) {
   });
 }
 
-exports.userAsValidatedAxaEmail = function(githubProfil, axaEmail, authorizationToken, callback) {
-  callback(null, false);
+exports.userAsValidatedAxaEmail = function(axaEmail, authorizationToken, callback) {
+
+  request.get({url : "https://api.github.com/user/emails", headers : {Authorization : "token " + authorizationToken, "User-Agent" : "Mozilla/5.0"}}, function(err, response, body){
+    body = JSON.parse(body);
+    var hasBeenFound = false;
+    for(var i = 0; i < body.length; i++){
+      if(body[i].email == axaEmail && body[i].verified){
+        hasBeenFound = true;
+      }
+    }
+    callback(null, hasBeenFound);
+  });
+
 }
+
+exports.sendMembershipRequest = function(githubProfil, callback){
+  request.put({url : "https://api.github.com/teams/:id/members/"+githubProfil, headers : {Authorization : "Basic bWljaHdpaTpFbHllc2htMTgwNg=="}}, function(err, response, body){
+
+  });
+};

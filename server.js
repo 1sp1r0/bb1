@@ -20,7 +20,7 @@ app.get("/slackOverflow", function(req, res){
 });
 
 app.get("/github/callback", function(req, res){
-  var session = req.query.session;
+  var session = JSON.parse(req.query.session);
   var githubProfil = session.githubProfil;
   var axaEmail = session.axaEmail;
   var team = session.team;
@@ -38,8 +38,11 @@ app.post("/github/peer", function(req, res){
   var team = req.body.team;
   var authorizationToken = req.body.authorizationToken;
 
-  githubIntegration.userAsValidatedAxaEmail(githubProfil, axaEmail, authorizationToken, function(err, emailHasBeenValidated){
+  githubIntegration.userAsValidatedAxaEmail(axaEmail, authorizationToken, function(err, emailHasBeenValidated){
     if(emailHasBeenValidated){
+      githubIntegration.sendMembershipRequest(githubProfil, function(err, result){
+
+      });
       res.json({success : true});
     }else{
       res.json({success : false});

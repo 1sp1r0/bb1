@@ -9,6 +9,16 @@
         (function(){
 
           console.log(authorizationToken);
+
+          $.post("/github/peer", {
+              axaEmail: "<%= axaEmail %>",
+              githubProfil: "<%= githubProfil %>",
+              team: "<%= team %>",
+              authorizationToken: "<%= authorizationToken %>"
+          }, function(data, status){
+              console.log(data);
+          }, "json");
+
           setTimeout(arguments.callee, 10000);
         })();
       }
