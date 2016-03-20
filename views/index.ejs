@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript">
+      var githubAuthorizationUrl = "https://github.com/login/oauth/authorize?client_id=782a6909b6c02f6c65ac&scope=user,admin:org&redirect_uri=";
+      var callBackUrl = "http://bb1test.azurewebsites.net/github/callback?" ;
+      function sendForm(event){
+        event.preventDefault();
+        var githubProfil = $('#githubProfil').val();
+        var axaEmail = $('#axaEmail').val();
+        var team = $('#team').val();
+        callBackUrl+="githubProfil="+githubProfil+"&axaEmail="+axaEmail+"&team="+team;
+        callBackUrl = encodeURI(callBackUrl);
+
+        $('#githubSyncForm').attr('action', githubAuthorizationUrl + callBackUrl);
+        //$('#githubSyncForm').submit();
+
+        console.log(githubAuthorizationUrl + callBackUrl);
+
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Sync up your personal github account with Axa</h1>
+    <br/>
+    <br/>
+    <br/>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form id="githubSyncForm" method="get" onsubmit="sendForm(event)">
+            <div class="form-group">
+              <label for="githubProfil">Github profil</label>
+              <input type="text" class="form-control" id="githubProfil" placeholder="Github profil">
+            </div>
+            <div class="form-group">
+              <label for="axaEmail">Axa Email</label>
+              <input type="email" class="form-control" id="axaEmail" placeholder="Axa Email">
+            </div>
+            <div class="form-group">
+              <label for="team">Which team you want to join ?</label>
+              <select id="team" class="form-control">
+                <option>Axa France</option>
+                <option>AGS</option>
+                <option>Axa Spain</option>
+                <option>Axa Belgium</option>
+                <option>Axa Germany</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-default">Sync me up</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
