@@ -1,7 +1,7 @@
 var request = require("request");
 
 var client_id = "60f72f281a4d25455fcd";
-var client_secret = "4f7964caa5b5d1ff215d6f3c1e72b8f9244b5f2b";
+var client_secret = "c84dea3db7f306d4a002318b77aed0d5182c9a7c";
 
 exports.getAuthorizationToken = function(code, callback) {
   request.post({url : "https://github.com/login/oauth/access_token", form : {code: code, client_id: client_id, client_secret : client_secret}, headers : {Accept: "application/json"}}, function(err, response, body){

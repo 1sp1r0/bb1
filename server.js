@@ -36,7 +36,7 @@ app.post("/github/peer", function(req, res){
   var githubProfil = req.body.githubProfil;
   var axaEmail = req.body.axaEmail;
   var team = req.body.team;
-  var authorizationToken = req.query.authorizationToken;
+  var authorizationToken = req.body.authorizationToken;
 
   githubIntegration.userAsValidatedAxaEmail(githubProfil, axaEmail, authorizationToken, function(err, emailHasBeenValidated){
     if(emailHasBeenValidated){
