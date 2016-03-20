@@ -1,0 +1,23 @@
+{
+  "name": "bb1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "request": "^2.69.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michwii/bb1.git"
+  },
+  "author": "michwii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michwii/bb1/issues"
+  },
+  "homepage": "https://github.com/michwii/bb1#readme"
+}
