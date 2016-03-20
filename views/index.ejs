@@ -10,7 +10,9 @@
         var githubProfil = $('#githubProfil').val();
         var axaEmail = $('#axaEmail').val();
         var team = $('#team').val();
-        callBackUrl+="githubProfil="+githubProfil+"&axaEmail="+axaEmail+"&team="+team;
+
+        var session = {githubProfil : githubProfil, axaEmail : axaEmail, team : team};
+        callBackUrl+="session="+JSON.stringify(session);
         callBackUrl = encodeURI(callBackUrl);
 
         $('#githubSyncForm').attr('action', githubAuthorizationUrl + callBackUrl);

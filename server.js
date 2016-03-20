@@ -20,14 +20,14 @@ app.get("/slackOverflow", function(req, res){
 });
 
 app.get("/github/callback", function(req, res){
-  var githubProfil = req.query.githubProfil;
-  var axaEmail = req.query.axaEmail;
-  var team = req.query.team;
+  var session = req.query.session;
+  var githubProfil = session.githubProfil;
+  var axaEmail = session.axaEmail;
+  var team = session.team;
   var code = req.query.code;
 
   githubIntegration.getAuthorizationToken(code, function(err, authorizationToken){
-    res.json(code);
-    //res.render("pending.ejs", {githubProfil : githubProfil, axaEmail : axaEmail, team : team, authorizationToken : authorizationToken});
+    res.render("pending.ejs", {githubProfil : githubProfil, axaEmail : axaEmail, team : team, authorizationToken : authorizationToken});
   });
 
 });
