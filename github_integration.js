@@ -5,6 +5,8 @@ var client_secret = "4f7964caa5b5d1ff215d6f3c1e72b8f9244b5f2b";
 
 exports.getAuthorizationToken = function(code, callback) {
   request.post({url : "https://github.com/login/oauth/access_token", form : {code: code, client_id: client_id, client_secret : client_secret}, headers : {Accept: "application/json"}}, function(err, response, body){
+    body = JSON.parse(body);
+    console.log(body);
     callback(err, body.access_token);
   });
 }
