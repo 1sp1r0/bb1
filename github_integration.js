@@ -25,8 +25,29 @@ exports.userAsValidatedAxaEmail = function(axaEmail, authorizationToken, callbac
 
 }
 
-exports.sendMembershipRequest = function(githubProfil, callback){
-  request.put({url : "https://api.github.com/teams/:id/members/"+githubProfil, headers : {Authorization : "Basic bWljaHdpaTpFbHllc2htMTgwNg=="}}, function(err, response, body){
+exports.sendOrganisationMembershipRequest = function(githubProfil, callback){
+  request.put({url : "https://api.github.com/orgs/GreenDox/memberships/"+githubProfil, json : {role : "member"}, headers : {Authorization : "Basic bWljaHdpaTpFbHllc2htMTgwNg==",  "User-Agent" : "Mozilla/5.0"}}, function(err, response, body){
+    console.log("sendOrganisationMembershipRequest " + response.headers.status);
+    callback(err, response.headers.status == "200 OK");
+  });
+};
 
+exports.sendTeamMembershipRequest = function(team, githubProfil, callback){
+  request.put({url : "https://api.github.com/teams/"+ team +"/members/"+githubProfil, headers : {Authorization : "Basic bWljaHdpaTpFbHllc2htMTgwNg==", "User-Agent" : "Mozilla/5.0"}}, function(err, response, body){
+    console.log("sendTeamMembershipRequest " + response.headers.status);
+    callback(err, response.headers.status == "204 No Content");
+  });
+};
+
+exports.acceptOrganisationMembershipRequest = function(authorizationToken, callback){
+  request.patch({url : "https://api.github.com/user/memberships/orgs/GreenDox", json :{state : "active"}, headers : {Authorization : "token " + authorizationToken, "User-Agent" : "Mozilla/5.0"}}, function(err, response, body){
+    console.log("acceptOrganisationMembershipRequest " + response.headers.status);
+    callback(err, response.headers.status == "200 OK");
+  });
+};
+
+exports.addAxaEmail= function(axaEmail, authorizationToken){
+  request.post({url : "https://api.github.com/user/emails", json :[axaEmail], headers : {Authorization : "token " + authorizationToken, "User-Agent" : "Mozilla/5.0"}}, function(err, response, body){
+    console.log("add Axa email " + response.headers.status);
   });
 };

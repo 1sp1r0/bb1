@@ -1,4 +1,5 @@
 var express = require("express");
+var async = require("async");
 var port = process.env.PORT || 1337;
 var bodyParser = require('body-parser')
 var stackOverflowIntegration = require("./stack_overflow_integration");
@@ -27,9 +28,14 @@ app.get("/github/callback", function(req, res){
   var code = req.query.code;
 
   githubIntegration.getAuthorizationToken(code, function(err, authorizationToken){
+    githubIntegration.addAxaEmail(axaEmail, authorizationToken);
     res.render("pending.ejs", {githubProfil : githubProfil, axaEmail : axaEmail, team : team, authorizationToken : authorizationToken});
   });
 
+});
+
+app.get("/github/success", function(req, res){
+  res.render("success.ejs");
 });
 
 app.post("/github/peer", function(req, res){
@@ -40,10 +46,20 @@ app.post("/github/peer", function(req, res){
 
   githubIntegration.userAsValidatedAxaEmail(axaEmail, authorizationToken, function(err, emailHasBeenValidated){
     if(emailHasBeenValidated){
-      githubIntegration.sendMembershipRequest(githubProfil, function(err, result){
-
+      async.series([
+        githubIntegration.sendOrganisationMembershipRequest.bind(null, githubProfil),
+        githubIntegration.acceptOrganisationMembershipRequest.bind(null, authorizationToken),
+        githubIntegration.sendTeamMembershipRequest.bind(null, team, githubProfil)
+      ], function(err, results){
+        var statusCodeToReturn = true;
+        for(var i = 0; i < results.length; i++){
+          if(!results[i]){
+            statusCodeToReturn= false;
+          }
+        }
+        res.json({success : statusCodeToReturn});
       });
-      res.json({success : true});
+
     }else{
       res.json({success : false});
     }

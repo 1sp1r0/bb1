@@ -16,7 +16,9 @@
               team: "<%= team %>",
               authorizationToken: "<%= authorizationToken %>"
           }, function(data, status){
-              console.log(data);
+              if(data.success){
+                window.location.href = "/github/success";
+              }
           }, "json");
 
           setTimeout(arguments.callee, 10000);
