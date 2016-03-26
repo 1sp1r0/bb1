@@ -17,9 +17,8 @@
         callBackUrl = encodeURI(callBackUrl);
 
         $('#githubSyncForm').attr('action', githubAuthorizationUrl + callBackUrl);
-        //$('#githubSyncForm').submit();
+        window.location.href = githubAuthorizationUrl + callBackUrl;
 
-        console.log(githubAuthorizationUrl + callBackUrl);
 
       }
     </script>
